@@ -1,0 +1,32 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  solution: '**/*.sln'
+
+steps:
+- checkout: self
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'runtime'
+    version: '7.x'
+
+- script: dotnet restore $(solution)
+  displayName: 'Restore NuGet packages'
+
+- script: dotnet build $(solution) --configuration Release
+  displayName: 'Build the project'
+
+- script: dotnet test $(solution) --configuration Release --logger trx --collect:"XPlat Code Coverage"
+  displayName: 'Run tests'
+
+- script: dotnet publish $(solution) --configuration Release --output $(Build.ArtifactStagingDirectory)/publish
+  displayName: 'Publish the project'
+
+- publish: $(Build.ArtifactStagingDirectory)/publish
+  artifact: drop
+  displayName: 'Publish Artifact'
