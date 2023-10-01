@@ -5,7 +5,12 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzuriteTestContainers", "AzuriteTestContainers\AzuriteTestContainers.csproj", "{73536C38-1F0C-477F-8A2E-2538F258A249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzuriteTestContainers.IntegrationTests", "AzuriteTestContainers.IntegrationTests\AzuriteTestContainers.IntegrationTests.csproj", "{12FDB0F9-011A-4CDC-BF99-88B3483C9EBA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzuriteTestContainers.IntegrationTests", "AzuriteTestContainers.IntegrationTests\AzuriteTestContainers.IntegrationTests.csproj", "{12FDB0F9-011A-4CDC-BF99-88B3483C9EBA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2024E949-05C3-4463-A4D8-637FE0A2C4EF}"
+	ProjectSection(SolutionItems) = preProject
+		pipeline.yml = pipeline.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

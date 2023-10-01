@@ -2,10 +2,10 @@ trigger:
 - main
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'azurite-testcontainers/AzuriteTestContainers.sln'
 
 steps:
 - checkout: self
@@ -15,18 +15,29 @@ steps:
     packageType: 'runtime'
     version: '7.x'
 
-- script: dotnet restore $(solution)
-  displayName: 'Restore NuGet packages'
+- task: DotNetCoreCLI@2
+  displayName: restore
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
 
-- script: dotnet build $(solution) --configuration Release
-  displayName: 'Build the project'
+- task: DotNetCoreCLI@2
+  displayName: build
+  inputs:
+    command: build
+    projects: $(solution)
+    arguments: '--configuration Release'
 
-- script: dotnet test $(solution) --configuration Release --logger trx --collect:"XPlat Code Coverage"
-  displayName: 'Run tests'
+- task: DotNetCoreCLI@2
+  displayName: test
+  inputs:
+    command: test
+    projects: $(solution)
+    arguments: --configuration Release --logger trx --collect:"XPlat Code Coverage"
 
-- script: dotnet publish $(solution) --configuration Release --output $(Build.ArtifactStagingDirectory)/publish
-  displayName: 'Publish the project'
-
-- publish: $(Build.ArtifactStagingDirectory)/publish
-  artifact: drop
-  displayName: 'Publish Artifact'
+- task: DotNetCoreCLI@2
+  displayName: publish
+  inputs:
+    command: 'publish'
+    projects: '**/*.csproj'
+    arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
