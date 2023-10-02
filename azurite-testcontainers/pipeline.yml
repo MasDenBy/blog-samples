@@ -1,0 +1,58 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  solution: 'azurite-testcontainers/AzuriteTestContainers.sln'
+  azureSubscription: 'My Test Subscription'
+
+steps:
+- checkout: self
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'runtime'
+    version: '7.x'
+
+- task: DotNetCoreCLI@2
+  displayName: restore
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: build
+  inputs:
+    command: build
+    projects: $(solution)
+    arguments: '--configuration Release'
+
+- task: CmdLine@2
+  displayName: install certificate
+  inputs:
+    workingDirectory: $(Build.SourcesDirectory)
+    script: |
+      sudo apt install libnss3-tools -y
+      curl -JLO "https://dl.filippo.io/mkcert/latest?for=linux/amd64"
+      chmod +x mkcert-v*-linux-amd64
+      sudo cp mkcert-v*-linux-amd64 /usr/local/bin/mkcert
+      mkcert -install
+      mkcert -cert-file ./azurite-testcontainers/AzuriteTestContainers.IntegrationTests/certs/127.0.0.1.pem -key-file ./azurite-testcontainers/AzuriteTestContainers.IntegrationTests/certs/127.0.0.1-key.pem 127.0.0.1
+
+- task: AzureCLI@2
+  displayName: test
+  inputs:
+    azureSubscription: $(azureSubscription)
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: |
+      dotnet test $(solution) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover --collect "Code coverage" --logger trx
+
+- task: DotNetCoreCLI@2
+  displayName: publish
+  inputs:
+    command: 'publish'
+    projects: '**/*.csproj'
+    arguments: '-o $(Build.ArtifactStagingDirectory)/Output'
