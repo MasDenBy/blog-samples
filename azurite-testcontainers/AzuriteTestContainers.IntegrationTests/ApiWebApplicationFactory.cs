@@ -1,4 +1,5 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure.Identity;
+using Azure.Storage.Blobs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +24,7 @@ public class ApiWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLi
     {
         builder.ConfigureServices(services =>
         {
-            services.AddSingleton(new BlobServiceClient(azuriteTestContainer.ConnectionString));
+            services.AddSingleton(new BlobServiceClient(azuriteTestContainer.BlobUri, new DefaultAzureCredential()));
         });
     }
 

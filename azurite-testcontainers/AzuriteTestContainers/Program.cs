@@ -1,11 +1,11 @@
+using Azure.Identity;
 using Azure.Storage.Blobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton(x =>
 {
-    var connectionString = "";
-    return new BlobServiceClient(connectionString);
+    return new BlobServiceClient(new Uri("https://127.0.0.1:10000/devstoreaccount1"), new DefaultAzureCredential());
 });
 
 var app = builder.Build();

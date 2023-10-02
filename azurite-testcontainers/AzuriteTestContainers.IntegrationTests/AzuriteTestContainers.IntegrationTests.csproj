@@ -28,4 +28,14 @@
     <ProjectReference Include="..\AzuriteTestContainers\AzuriteTestContainers.csproj" />
   </ItemGroup>
 
+	<!--<ItemGroup>
+		<None Include="$(SolutionDir)certs\**" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+	  <None Update="certs\**">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
+
 </Project>
