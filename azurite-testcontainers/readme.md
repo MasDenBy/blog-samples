@@ -1,0 +1,2 @@
+# Use Testcontainers for running Azurite in Azure DevOps pipeline
+The source code for the article [Use Testcontainers for running Azurite in Azure DevOps pipeline](https://iharmaiseyeu.net/use-testcontainers-for-running-azurite-in-azure-devops-pipeline)
