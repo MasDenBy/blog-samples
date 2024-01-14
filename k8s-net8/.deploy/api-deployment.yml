@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-deploy
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: api
+  # revisionHistoryLimit: 3
+  progressDeadlineSeconds: 60
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api-pod
+        image: sample-api:1.0
+        ports:
+        - containerPort: 8080
