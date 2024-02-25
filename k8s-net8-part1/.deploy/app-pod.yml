@@ -5,4 +5,12 @@ metadata:
 spec:
   containers:
   - name: hello-kube
-    image: hello-kube:1.0
+    image: hello-kube:1.2
+    volumeMounts:
+    - mountPath: /configuration
+      name: configuration-volume
+  volumes:
+  - name: configuration-volume
+    hostPath:
+      path: /run/desktop/mnt/host/hello-kube-vol
+      type: DirectoryOrCreate
