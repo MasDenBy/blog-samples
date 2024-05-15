@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  containers:
+  - name: hello-kube
+    image: hello-kube:1.2
+    volumeMounts:
+    - mountPath: /configuration
+      name: configuration-volume
+  volumes:
+  - name: configuration-volume
+    hostPath:
+      path: /run/desktop/mnt/host/hello-kube-vol
+      type: DirectoryOrCreate
