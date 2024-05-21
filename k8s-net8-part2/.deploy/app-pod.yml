@@ -3,14 +3,13 @@ kind: Pod
 metadata:
   name: app-pod
 spec:
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: hello-pvc
   containers:
   - name: hello-kube
     image: hello-kube:1.2
     volumeMounts:
-    - mountPath: /configuration
-      name: configuration-volume
-  volumes:
-  - name: configuration-volume
-    hostPath:
-      path: /run/desktop/mnt/host/hello-kube-vol
-      type: DirectoryOrCreate
+    - name: data
+      mountPath: /configuration

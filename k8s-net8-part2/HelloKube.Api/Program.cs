@@ -16,7 +16,7 @@ app.MapGet("/api/state", () =>
 
 app.MapGet("/api/health", () =>
 {
-    return Results.Ok();
+    return Results.Ok(Environment.MachineName);
 });
 
 app.Run();
