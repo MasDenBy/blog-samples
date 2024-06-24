@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: hello-pvc
+  containers:
+  - name: hello-kube
+    image: hello-kube:1.2
+    volumeMounts:
+    - name: data
+      mountPath: /configuration
