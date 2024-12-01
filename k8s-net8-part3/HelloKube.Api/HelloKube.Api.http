@@ -1,0 +1,6 @@
+@HelloKube.Api_HostAddress = http://localhost:32768
+
+GET {{HelloKube.Api_HostAddress}}/api/state
+Accept: application/json
+
+###
