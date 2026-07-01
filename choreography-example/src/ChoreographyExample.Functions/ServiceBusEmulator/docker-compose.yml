@@ -1,0 +1,39 @@
+services:
+  sqledge:
+    image: "mcr.microsoft.com/azure-sql-edge:latest"
+    container_name: "sqledge"
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "ServiceBusEmulator123!"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "ServiceBusEmulator123!", "-Q", "SELECT 1"]
+      interval: 10s
+      timeout: 5s
+      start_period: 60s
+      retries: 10
+    networks:
+      - sb-emulator
+
+  sb-emulator:
+    image: "mcr.microsoft.com/azure-messaging/servicebus-emulator:latest"
+    container_name: "servicebus-emulator"
+    ports:
+      - "5672:5672"
+      - "5300:5300"
+    environment:
+      SQL_SERVER: sqledge
+      MSSQL_SA_PASSWORD: "ServiceBusEmulator123!"
+      ACCEPT_EULA: "Y"
+    depends_on:
+      sqledge:
+        condition: service_healthy
+    volumes:
+      - ./Config.json:/ServiceBus_Emulator/ConfigFiles/Config.json:ro
+    networks:
+      sb-emulator:
+        aliases:
+          - "sb-emulator"
+
+networks:
+  sb-emulator:
+    driver: bridge

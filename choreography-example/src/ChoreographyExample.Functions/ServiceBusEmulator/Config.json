@@ -1,0 +1,77 @@
+{
+  "UserConfig": {
+    "Namespaces": [
+      {
+        "Name": "sbemulatorns",
+        "Queues": [],
+        "Topics": [
+          {
+            "Name": "order-events",
+            "Subscriptions": [
+              {
+                "Name": "order-created-email-sub",
+                "Rules": [
+                  {
+                    "Name": "sql-filter-1",
+                    "Properties": {
+                      "FilterType": "Sql",
+                      "SqlFilter": {
+                        "SqlExpression": "sys.Label = 'OrderCreated'"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": "order-created-inventory-sub",
+                "Rules": [
+                  {
+                    "Name": "sql-filter-1",
+                    "Properties": {
+                      "FilterType": "Sql",
+                      "SqlFilter": {
+                        "SqlExpression": "sys.Label = 'OrderCreated'"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "Name": "inventory-booked-delivery-sub",
+                "Rules": [
+                  {
+                    "Name": "sql-filter-1",
+                    "Properties": {
+                      "FilterType": "Sql",
+                      "SqlFilter": {
+                        "SqlExpression": "sys.Label = 'OrderInventoryBooked'"
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "Name": "delivery-events",
+            "Subscriptions": [
+              {
+                "Name": "delivery-log-sub",
+                "Rules": []
+              }
+            ]
+          }
+        ],
+        "SharedAccessKeys": {
+          "RootManageSharedAccessKey": {
+            "PrimaryKey": "ChoreographyExampleKey2024!",
+            "SecondaryKey": "ChoreographyExampleKey2024!"
+          }
+        }
+      }
+    ],
+    "Logging": {
+      "Type": "File"
+    }
+  }
+}
