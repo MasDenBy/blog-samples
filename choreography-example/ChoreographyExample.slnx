@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ChoreographyExample.Functions/ChoreographyExample.Functions.csproj" />
+  </Folder>
+</Solution>
