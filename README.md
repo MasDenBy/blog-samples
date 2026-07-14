@@ -8,3 +8,4 @@ This repository consist source code files for my articles from blog [iharmaiseye
 - [Scaling .NET 8 Applications in Kubernetes](/k8s-net8-part2/readme.md)
 - [Hosting .NET 8 Applications in Azure Kubernetes Service (AKS)](/k8s-net8-part3)
 - [Choreography pattern with Azure Functions and Azure Service Bus](/choreography-example)
+- [Orchestration pattern](/orchestrator-example/)
