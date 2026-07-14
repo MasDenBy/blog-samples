@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/OrderProcess.Functions/OrderProcess.Functions.csproj" />
+    <Project Path="src/OrderOrchestrator/OrderOrchestrator.csproj" />
+  </Folder>
+</Solution>
